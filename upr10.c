@@ -55,7 +55,10 @@ int main(int argc, char* argv[])
                     //     if (no_rows > 0) no_rows--;
                     //     break;
                     // }
-
+                    case SDLK_q: //off btn
+                    {
+                        quit = 1;
+                    }
 
                 } 
             }
