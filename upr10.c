@@ -106,9 +106,10 @@ int main(int argc, char* argv[])
         // }
 
         SDL_RenderPresent(renderer);
+        
     }
-
-   SDL_Quit();
+    SDL_DestroyTexture(Start_texture); 
+    SDL_Quit();
 
     return 0;
 }
