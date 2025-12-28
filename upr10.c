@@ -14,16 +14,24 @@ int main(int argc, char* argv[])
     }
     */
 
-
    // -lSDL2 do task.json
+   // inicializace>
    SDL_Init(SDL_INIT_VIDEO); // | SDL_INIT_AUDIO); pro audio k videu
-
-   SDL_Window* Window = SDL_CreateWindow("Hyper galatickz graf. program",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED, 1400, 900, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE); // pro kreace okna ||| (nazev okna), pozice, pozice, Rozmer, Rozmer, Visibilita
+   IMG_Init(IMG_INIT_PNG);
+   SDL_Window* Window = SDL_CreateWindow("Bulanic",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED, 1216, 800, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE); // pro kreace okna ||| (nazev okna), pozice, pozice, Rozmer, Rozmer, Visibilita
    SDL_Renderer* renderer = SDL_CreateRenderer(Window, -1,SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC); // jake okno? , monitor? -1 auto , nastaveni co renderuje GPU + VSYNC
 
    int quit = 0;
 
    SDL_Event event;
+
+
+    int WindowWidth = 0;
+    int WindowHeight = 0;
+    SDL_GetWindowSize(Window,&WindowWidth,&WindowHeight); // nastavi window size
+
+    WindowWidth--;
+    WindowHeight--;
 
    //int no_rows = 10;
 
@@ -38,6 +46,7 @@ int main(int argc, char* argv[])
                 case SDL_QUIT: //krizek 
                 {
                     quit = 1;
+                    IMG_Quit();
                     break;
                 }
             }
@@ -58,8 +67,8 @@ int main(int argc, char* argv[])
                     case SDLK_q: //off btn
                     {
                         quit = 1;
+                        IMG_Quit();
                     }
-
                 } 
             }
             
@@ -68,26 +77,22 @@ int main(int argc, char* argv[])
         SDL_RenderClear(renderer);
 
         //start BUTTON ->
+        int StartbtnW = 500;
+        int StartbtnH = 250;
+
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
         SDL_Rect StartCtverec = {
-            .x = 700,
-            .y = 400,
-            .w = 500,
-            .h = 250
+            .x = (WindowWidth - StartbtnW) / 2,
+            .y = (WindowHeight - StartbtnH) / 2,
+            .w = StartbtnW,
+            .h = StartbtnH
         };
+
         //SDL_RenderFillRect(renderer, &StartCtverec); fill rect
         // textura na start button
         SDL_RenderCopy(renderer, Start_texture, NULL, &StartCtverec);
         //SDL_DestroyTexture(Start_texture); 
-        //vždy uvolnit image po použití
-
-
-        int width = 0;
-        int height = 0;
-        SDL_GetWindowSize(Window,&width,&height); // nastavi window size
-
-        width--;
-        height--;
+        //vï¿½dy uvolnit image po pouï¿½itï¿½
 
         // SDL_SetRenderDrawColor(renderer, 255,255,255,SDL_ALPHA_OPAQUE);
         // SDL_RenderDrawLine(renderer,0,0,width,height);
@@ -109,6 +114,7 @@ int main(int argc, char* argv[])
         
     }
     SDL_DestroyTexture(Start_texture); 
+    IMG_Quit();
     SDL_Quit();
 
     return 0;
